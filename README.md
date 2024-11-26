@@ -1,10 +1,10 @@
 ## 1. Project Title
   
-Create a Go project to get the system CPU usages, CPU load and system uptime.
+Create a Go project to retrieve the system's CPU usage, CPU load, and system uptime.
 
 ## 2. Project Description
   
-This project runs on GO language using Docker, leveraging multi-stage builds to minimize the image size and deploy on the azure server. 
+This project is built using the Go programming language and runs in a Docker container. It utilizes multi-stage builds to minimize the image size and is deployed on an Azure server.
 
 ## 3. Prerequisites
   
@@ -77,7 +77,6 @@ This project runs on GO language using Docker, leveraging multi-stage builds to 
    The project uses GitHub Actions to automate the CI/CD pipeline. The pipeline is defined in `.github/workflows/go-ci.yml`.
 
 ### 6. Expectations
-  
 - The following expectations should be met to complete this project.
   -  Proper tagging to docker image.✅
   - Makefile should have all targets as below.
@@ -93,7 +92,7 @@ This project runs on GO language using Docker, leveraging multi-stage builds to 
     - To add pre-requisites for any existing tools that must already be installed (e.g., docker, make, etc)✅
     - To run different make targets and the order of execution.✅
   
-  ### 6. Accessing the Application
+### 7. Accessing the Application
   - Application end-points at local system:
     - CPU usages: http://localhost:8080/cpu ✅
     - System uptime: http://localhost:8080/uptime ✅
@@ -102,7 +101,8 @@ This project runs on GO language using Docker, leveraging multi-stage builds to 
     - CPU usages: http://Server-IP:8080/cpu ✅
     - System uptime: http://Server-IP:8080/uptime ✅
     - System Load: http://Server-IP:8080/load ✅
-  ### 7. Snapshots
+
+### 7. Snapshots
   - Local-CPU usages: ![CPU usages](snapshots/cpu.png)
   - Local-System Load: ![System Load](snapshots/load.png)
   - Local-System uptime: ![System uptime](snapshots/uptime.png)
