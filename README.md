@@ -8,11 +8,20 @@ This project runs on GO language using Docker, leveraging multi-stage builds to 
 
 ## 3. Prerequisites
   
-- Docker
+- Docker (must be installed on local and azure server)
 - Go language
 - Make
-- 
+- Azure Server (SSH msut be enabled with related application port)
+- GitHub Secrets Configuration
+    - `DOCKERHUB_USERNAME`: Your DockerHub username.
+    - `DOCKERHUB_TOKEN`: Your DockerHub access token/password.
+    - `AZURE_SERVER_USERNAME`: The username for your Azure server.
+    - `AZURE_SERVER_PASSWORD`: The password for SSH access to the Azure server.
+    - `AZURE_SERVER_IP`: The IP address of your Azure server.
+    - `DOCKERHUB_REPONAME`: This is the docker reponame.
+
 ## 4. Setup & configuration
+ Makefile Configuration
   
  ```
  # Clone the repository
@@ -64,13 +73,10 @@ This project runs on GO language using Docker, leveraging multi-stage builds to 
  # Target to run the service
  make docker-run
  ```
+### 5. **GitHub Actions CI Pipeline**
+   The project uses GitHub Actions to automate the CI/CD pipeline. The pipeline is defined in `.github/workflows/go-ci.yml`.
 
- ```
- # Target to clean the temporary files.
- make full_clean
- ```
-
-### 5. Expectations
+### 6. Expectations
   
 - The following expectations should be met to complete this project.
   -  Proper tagging to docker image.✅
@@ -88,12 +94,21 @@ This project runs on GO language using Docker, leveraging multi-stage builds to 
     - To run different make targets and the order of execution.✅
   
   ### 6. Accessing the Application
-  - application end-points:
+  - Application end-points at local system:
     - CPU usages: http://localhost:8080/cpu ✅
     - System uptime: http://localhost:8080/uptime ✅
     - System Load: http://localhost:8080/load ✅
-
+  - Application end-points at Cloud servr:
+    - CPU usages: http://Server-IP:8080/cpu ✅
+    - System uptime: http://Server-IP:8080/uptime ✅
+    - System Load: http://Server-IP:8080/load ✅
   ### 7. Snapshots
-  - CPU usages: ![CPU usages](snapshots/cpu.png)
-  - System Load: ![System Load](snapshots/load.png)
-  - System uptime: ![System uptime](snapshots/uptime.png)
+  - Local-CPU usages: ![CPU usages](snapshots/cpu.png)
+  - Local-System Load: ![System Load](snapshots/load.png)
+  - Local-System uptime: ![System uptime](snapshots/uptime.png)
+  - Go-pipeline: ![go-pipeline](snapshots/go-pipeline.png)
+  - Deployment on Azure Server: ![Azure-deployment](snapshots/deployment_on_Azure.png)
+  
+  - Azure-CPU usages: ![Azure-CPU usages](snapshots/Azure_cpu.png)
+  - Azure-System Load: ![Azure-System Load](snapshots/azure_load.png)
+  - Azure-System uptime: ![Azure-System uptime](snapshots/azure_uptime.png)
