@@ -1,0 +1,93 @@
+name: Go Project CI
+
+on:
+  push:
+    branches:
+      - main
+#  pull_request:
+#    branches:
+#      - main
+#  workflow_dispatch:
+
+permissions: 
+    contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    # Create .env file and extract TAG from Makefile
+    - name: Create .env file and extract TAG from Makefile
+      run: |
+          echo "TAG=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
+          echo "DOCKER_USER=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
+
+
+
+    # Step 2: Set up Go environment
+    - name: Set up Go 1.23
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.23'
+
+    # Step 3: Cache Go modules for faster builds
+    - name: Cache Go modules
+      uses: actions/cache@v2
+      with:
+        path: /tmp/mod-cache
+        key: ${{ runner.os }}-go-mod-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-mod-
+
+    # Step 4: Install Go dependencies
+    - name: Install dependencies
+      run: |
+        make install
+
+    # Step 5: Check Go version
+    - name: Check Go version
+      run: |
+        make version
+
+    # Step 6: Run linting
+    - name: Run Linting
+      run: |
+        make lint
+
+    # Step 7: Run tests
+    - name: Run Tests
+      run: |
+        make test
+
+    # Step 8: Build the Go project
+    - name: Build the Go project
+      run: |
+        make build
+
+    # Step 9: Build and tag Docker image
+    - name: Build Docker image
+      run: |
+        make docker-build
+
+    # Step 10: Log in to Docker Hub
+    - name: Docker Login
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Step 11: Push Docker image to Docker Hub
+    - name: Push Docker image to Docker Hub
+      run: |
+        make docker-push
+
+#    # Step 12: Run Docker container locally (Optional)
+#    - name: Run Docker container locally
+#      run: |
+#        make docker-run

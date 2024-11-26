@@ -7,7 +7,12 @@ endif
 # Variables
 DOCKER_USER = rajeshecb70
 DOCKER_IMAGE = goproject
-TAG = 1.1.0
+TAG = 1.1.2
+
+print_version:
+	@echo $(TAG)
+	@echo $(DOCKER_USER)
+	@echo $(DOCKER_IMAGE)
 
 # Check the Go version
 version:
@@ -19,7 +24,7 @@ install:
 	@echo "Install the dependencies..."
 	go mod download
 
-# Run linting
+# Check linting
 lint:
 	@echo "Check the linting..."
 	golangci-lint run main.go main_test.go
@@ -29,6 +34,12 @@ test:
 	@echo "Test the project..."
 	go test -v
 
+# Create the build
+build:
+	@echo "Build the project..."
+	go build -o build/bin/go-project main.go
+
+
 # Build and tag the Docker image
 docker-build:
 	@echo "Building Docker image..."
@@ -37,7 +48,7 @@ docker-build:
 	docker tag $(DOCKER_IMAGE):$(TAG) $(DOCKER_USER)/$(DOCKER_IMAGE):$(TAG)
 
 
-# Login to Docker Hub
+# Login to Docker Hub (Docker login detail mention in your .env file)
 docker-login:
 	@echo "Logging in to Docker Hub..."
 	@docker login -u $(DOCKER_USERNAME) -p $(DOCKER_PASSWORD)
