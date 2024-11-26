@@ -25,8 +25,8 @@ jobs:
     - name: Create .env file and extract TAG from Makefile
       run: |
           echo "TAG=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
-          echo "DOCKER_USER=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
-          echo "DOCKER_IMAGE=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
+        #  echo "DOCKER_USER=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
+        #  echo "DOCKER_IMAGE=$(make -C $GITHUB_WORKSPACE print_version)" >> $GITHUB_ENV
 
 
 
