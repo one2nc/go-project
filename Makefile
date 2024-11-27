@@ -7,7 +7,7 @@ endif
 # Variables
 DOCKER_USER = rajeshecb70
 DOCKER_IMAGE = goproject
-TAG = 1.1.2
+TAG = 1.1.3
 
 print_version:
 	@echo $(TAG)
@@ -42,10 +42,8 @@ build:
 
 # Build and tag the Docker image
 docker-build:
-	@echo "Building Docker image..."
-	docker build -t $(DOCKER_IMAGE):$(TAG) .
-	@echo "Tagging Docker image..."
-	docker tag $(DOCKER_IMAGE):$(TAG) $(DOCKER_USER)/$(DOCKER_IMAGE):$(TAG)
+	@echo "Building and tagging Docker image..."
+	docker build -t $(DOCKER_USER)/$(DOCKER_IMAGE):$(TAG) .
 
 
 # Login to Docker Hub (Docker login detail mention in your .env file)
